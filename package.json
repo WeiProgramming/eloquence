@@ -18,5 +18,10 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "fullcalendar": "^3.9.0",
+        "vue-full-calendar": "^2.5.4",
+        "vue-fullcalendar": "^1.0.9"
     }
 }
