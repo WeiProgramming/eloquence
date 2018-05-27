@@ -47464,7 +47464,7 @@ exports = module.exports = __webpack_require__(46)(false);
 
 
 // module
-exports.push([module.i, "\ninput[type='text'][data-v-dcb38f78] {\n\tcolor:black !important;\n}\n.box[data-v-dcb38f78] {\n\tposition:relative;\n\theight:600px;\n}\n.row[data-v-dcb38f78] {\n\theight:100%;\n}\n.lbox[data-v-dcb38f78] {\n\tmargin-top: 2%;\n\theight: 100%;\t\n\tbackground-color: #976DD0;\n}\n.rbox[data-v-dcb38f78] {\n\tmargin-top: 1%;\n\theight: 50%;\n\tbackground-color: #976DD0;\n\tposition: relative;\n}\n.showBtn[data-v-dcb38f78] {\n\tposition: absolute;\n\tbottom: 5%;\n\tleft: 50%;\n\t-webkit-transform: translateX(-50%);\n\t        transform: translateX(-50%);\n}\n\n", ""]);
+exports.push([module.i, "\ninput[type='text'][data-v-dcb38f78] {\n\tcolor:black !important;\n}\n.box[data-v-dcb38f78] {\n\tposition:relative;\n\theight:600px;\n}\n.row[data-v-dcb38f78] {\n\theight:100%;\n}\n.lbox[data-v-dcb38f78] {\n\tmargin-top: 1%;\n\theight: 100%;\t\n\tbackground-color: #976DD0;\n}\n.rbox[data-v-dcb38f78] {\n\tmargin-top: 1%;\n\theight: 50%;\n\tbackground-color: #976DD0;\n\tposition: relative;\n}\n.showBtn[data-v-dcb38f78] {\n\tposition: absolute;\n\tbottom: 5%;\n\tleft: 50%;\n\t-webkit-transform: translateX(-50%);\n\t        transform: translateX(-50%);\n}\n\n", ""]);
 
 // exports
 
@@ -47852,21 +47852,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
 			companyName: '',
+			position: '',
+			currentInterview: '',
+			totalInterview: '',
+			jobOffer: false,
 			showForm: false,
 			interviewList: []
 		};
 	},
 
 	methods: {
-		addItems: function addItems(e) {
+		addItem: function addItem(e) {
 			this.interviewList.push(this.companyName);
 			this.companyName = '';
+			this.position = '';
+			this.currentInterview = '';
+			this.totalInterview = '';
+			this.showForm = false;
 			e.preventDefault();
+		},
+		deleteItem: function deleteItem(e) {
+			e.preventDefault();
+			this.interviewList.pop();
 		},
 		showInput: function showInput() {
 			this.showForm = !this.showForm;
@@ -47890,60 +47921,195 @@ var render = function() {
             _vm._v("On-Going Interviews")
           ]),
           _vm._v(" "),
-          _c(
-            "ul",
-            [
-              _vm._l(_vm.interviewList, function(item) {
-                return _c("li", [
-                  _vm._v("\n\t\t\t\t\t\t" + _vm._s(item) + "\n\t\t\t\t\t")
-                ])
-              }),
-              _vm._v(" "),
-              _vm.showForm
-                ? _c("form", [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "companyName" } }, [
-                        _vm._v("Company \n\t\t\t\t\t\t\t"),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.companyName,
-                              expression: "companyName"
-                            }
-                          ],
-                          staticClass: "form-cntrol",
-                          attrs: {
-                            name: "companyName",
-                            type: "text",
-                            maxlength: "255"
-                          },
-                          domProps: { value: _vm.companyName },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.companyName = $event.target.value
-                            }
+          _vm.showForm
+            ? _c("div", { staticClass: "container" }, [
+                _c("form", [
+                  _c("div", { staticClass: "md-form" }, [
+                    _c("label", { attrs: { for: "companyName" } }, [
+                      _vm._v("Company")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.companyName,
+                          expression: "companyName"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "companyName",
+                        type: "text",
+                        maxlength: "255"
+                      },
+                      domProps: { value: _vm.companyName },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
-                        }),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-raised btn-primary",
-                            on: { click: _vm.addItems }
-                          },
-                          [_vm._v("Add")]
-                        )
-                      ])
-                    ])
+                          _vm.companyName = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "md-form" }, [
+                    _c("label", { attrs: { for: "position" } }, [
+                      _vm._v("Position")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.position,
+                          expression: "position"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "position",
+                        type: "text",
+                        maxlength: "255"
+                      },
+                      domProps: { value: _vm.position },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.position = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "md-form" }, [
+                    _c("label", { attrs: { for: "currentInterview" } }, [
+                      _vm._v("Current Interview")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.currentInterview,
+                          expression: "currentInterview"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "currentInterview",
+                        type: "text",
+                        maxlength: "255"
+                      },
+                      domProps: { value: _vm.currentInterview },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.currentInterview = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "md-form" }, [
+                    _c("label", { attrs: { for: "totalInterview" } }, [
+                      _vm._v("Total Interview")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.totalInterview,
+                          expression: "totalInterview"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "totalInterview",
+                        type: "text",
+                        maxlength: "255"
+                      },
+                      domProps: { value: _vm.totalInterview },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.totalInterview = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "md-form" }, [
+                    _c("label", { attrs: { for: "jobOffer" } }, [
+                      _vm._v("Job Offer")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.jobOffer,
+                          expression: "jobOffer"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "jobOffer",
+                        type: "text",
+                        maxlength: "255"
+                      },
+                      domProps: { value: _vm.jobOffer },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.jobOffer = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-raised btn-primary",
+                      on: { click: _vm.addItem }
+                    },
+                    [_vm._v("Add")]
+                  )
+                ])
+              ])
+            : _c(
+                "ul",
+                _vm._l(_vm.interviewList, function(item) {
+                  return _c("li", [
+                    _vm._v("\n\t\t\t\t\t\t" + _vm._s(item) + "\n\t\t\t\t\t\t"),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: { click: _vm.deleteItem }
+                      },
+                      [_vm._v("Delete")]
+                    )
                   ])
-                : _vm._e()
-            ],
-            2
-          ),
+                })
+              ),
           _vm._v(" "),
           _c(
             "button",
@@ -47967,11 +48133,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "right col-md-6" }, [
       _c("div", { staticClass: "card rbox", attrs: { align: "center" } }, [
-        _c("h3", [_vm._v("yo there")])
+        _c("h3", [_vm._v("Calendar")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card rbox", attrs: { align: "center" } }, [
-        _c("h3", [_vm._v("yo here")])
+        _c("h3", [_vm._v("Available Time")])
       ])
     ])
   }

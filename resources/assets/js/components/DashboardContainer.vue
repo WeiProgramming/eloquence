@@ -4,16 +4,36 @@
 			<div class = "left col-md-6">
 				<div class = "card lbox">
 					<h3 align = "center">On-Going Interviews</h3>
-					<ul>
+					<div class = "container" v-if="showForm">
+					<form>
+						<div class = "md-form">
+							<label for = "companyName">Company</label>
+							<input name = "companyName" class = "form-control" v-model = "companyName" type = "text" maxlength="255">
+						</div>
+						<div class = "md-form">
+							<label for = "position">Position</label>
+							<input name = "position" class = "form-control" v-model = "position" type = "text" maxlength="255">
+						</div>
+						<div class = "md-form">
+							<label for = "currentInterview">Current Interview</label>
+							<input name = "currentInterview" class = "form-control" v-model = "currentInterview" type = "text" maxlength="255">							
+						</div>
+						<div class = "md-form">
+							<label for = "totalInterview">Total Interview</label>
+							<input name = "totalInterview" class = "form-control" v-model = "totalInterview" type = "text" maxlength="255">
+						</div>
+						<div class = "md-form">
+							<label for = "jobOffer">Job Offer</label>
+							<input name = "jobOffer" class = "form-control" v-model = "jobOffer" type = "text" maxlength="255">
+						</div>
+							<button @click = 'addItem' class = "btn btn-raised btn-primary">Add</button>
+					</form>
+				</div>
+					<ul v-else>
 						<li v-for = "item in interviewList">
 							{{item}}
+							<button @click = "deleteItem" class = "btn btn-danger">Delete</button>
 						</li>
-						<form v-if = "showForm">
-							<div class = "form-group">
-								<label for = "companyName">Company 
-								<input name = "companyName" class = "form-cntrol" v-model = "companyName" type = "text" maxlength="255"><button @click = 'addItems' class = "btn btn-raised btn-primary">Add</button></label>
-							</div>
-						</form>
 					</ul>
 					<button @click = 'showInput' class = "btn btn-raised btn-primary showBtn">Show Form</button>
 				</div>
@@ -21,33 +41,43 @@
 
 			<div class= "right col-md-6">
 				<div class = "card rbox" align = "center">
-					<h3>yo there</h3>
+					<h3>Calendar</h3>
 				</div>
 				<div class = "card rbox" align = "center">
-					<h3>yo here</h3>
+					<h3>Available Time</h3>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
-
 <script>
 	export default {
 		data(){
 			return {
 				companyName: '',
+				position: '',
+				currentInterview: '',
+				totalInterview:'',
+				jobOffer: false,
 				showForm: false,
 				interviewList: []
 			}
 		},
 		methods: {
-			addItems(e) {
+			addItem(e) {
 				this.interviewList.push(this.companyName);
 				this.companyName = '';
+				this.position = '';
+				this.currentInterview = '';
+				this.totalInterview = '';
+				this.showForm = false;
 				e.preventDefault();
 			},
-
+			deleteItem(e){
+				e.preventDefault();
+				this.interviewList.pop();
+			},
 			showInput() {
 				this.showForm = !(this.showForm);
 			}
@@ -70,7 +100,7 @@
 	}
 
 	.lbox {
-		margin-top: 2%;
+		margin-top: 1%;
 		height: 100%;	
 		background-color: #976DD0;
 	}
