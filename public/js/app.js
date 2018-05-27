@@ -47464,7 +47464,7 @@ exports = module.exports = __webpack_require__(46)(false);
 
 
 // module
-exports.push([module.i, "\n.rbox[data-v-dcb38f78] {\n\tmargin-top: 1%;\n\theight: 50%;\n}\n", ""]);
+exports.push([module.i, "\ninput[type='text'][data-v-dcb38f78] {\n\tcolor:black !important;\n}\n.box[data-v-dcb38f78] {\n\tposition:relative;\n\theight:600px;\n}\n.row[data-v-dcb38f78] {\n\theight:100%;\n}\n.lbox[data-v-dcb38f78] {\n\tmargin-top: 2%;\n\theight: 100%;\t\n\tbackground-color: #976DD0;\n}\n.rbox[data-v-dcb38f78] {\n\tmargin-top: 1%;\n\theight: 50%;\n\tbackground-color: #976DD0;\n\tposition: relative;\n}\n.showBtn[data-v-dcb38f78] {\n\tposition: absolute;\n\tbottom: 5%;\n\tleft: 50%;\n\t-webkit-transform: translateX(-50%);\n\t        transform: translateX(-50%);\n}\n\n", ""]);
 
 // exports
 
@@ -47848,20 +47848,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			message: "hello",
 			companyName: '',
+			showForm: false,
 			interviewList: []
 		};
 	},
 
 	methods: {
-		addItems: function addItems() {
+		addItems: function addItems(e) {
 			this.interviewList.push(this.companyName);
 			this.companyName = '';
+			e.preventDefault();
+		},
+		showInput: function showInput() {
+			this.showForm = !this.showForm;
 		}
 	}
 });
@@ -47891,36 +47899,59 @@ var render = function() {
                 ])
               }),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.companyName,
-                    expression: "companyName"
-                  }
-                ],
-                attrs: { type: "text", maxlength: "255" },
-                domProps: { value: _vm.companyName },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.companyName = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("h2", [_vm._v(_vm._s(_vm.companyName))])
+              _vm.showForm
+                ? _c("form", [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "companyName" } }, [
+                        _vm._v("Company \n\t\t\t\t\t\t\t"),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.companyName,
+                              expression: "companyName"
+                            }
+                          ],
+                          staticClass: "form-cntrol",
+                          attrs: {
+                            name: "companyName",
+                            type: "text",
+                            maxlength: "255"
+                          },
+                          domProps: { value: _vm.companyName },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.companyName = $event.target.value
+                            }
+                          }
+                        }),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-raised btn-primary",
+                            on: { click: _vm.addItems }
+                          },
+                          [_vm._v("Add")]
+                        )
+                      ])
+                    ])
+                  ])
+                : _vm._e()
             ],
             2
           ),
           _vm._v(" "),
           _c(
             "button",
-            { staticClass: "btn btn-success", on: { click: _vm.addItems } },
-            [_vm._v("Add")]
+            {
+              staticClass: "btn btn-raised btn-primary showBtn",
+              on: { click: _vm.showInput }
+            },
+            [_vm._v("Show Form")]
           )
         ])
       ]),
