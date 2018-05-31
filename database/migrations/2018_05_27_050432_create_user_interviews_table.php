@@ -19,7 +19,7 @@ class CreateUserInterviewsTable extends Migration
             $table->string('company_name');
             $table->string('position');
             $table->tinyInteger('current_interview');
-            $table->tinyInteger('total_interview')
+            $table->tinyInteger('total_interview');
             $table->enum('job_offer',['true','false']);
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\UserInterview;
 use Illuminate\Http\Request;
 
 class InterviewListController extends Controller
@@ -13,7 +14,8 @@ class InterviewListController extends Controller
      */
     public function index()
     {
-        //
+        $user = UserInterview::all();
+        return $user;
     }
 
     /**
@@ -23,7 +25,7 @@ class InterviewListController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +36,7 @@ class InterviewListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

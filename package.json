@@ -20,6 +20,6 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-
+        "v-calendar": "^0.9.7"
     }
 }
