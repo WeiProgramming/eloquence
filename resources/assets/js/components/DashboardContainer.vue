@@ -5,25 +5,25 @@
 				<div class = "card lbox">
 					<h3 align = "center">On-Going Interviews</h3>
 					<div class = "container" v-if="showForm">
-						<form>
+						<form @submit.prevent="addItem">
 							<div class = "form-group">
 								<label for = "companyName">Company</label>
-								<input name = "companyName" class = "form-control" v-model = "companyName" type = "text" maxlength="255">
+								<input name = "companyName" class = "form-control" type = "text" maxlength="255" v-model="interviewItem.companyName">
 							</div>
 							<div class = "form-group">
 								<label for = "position">Position</label>
-								<input name = "position" class = "form-control" v-model = "position" type = "text" maxlength="255">
+								<input name = "position" class = "form-control" type = "text" maxlength="255" v-model="interviewItem.position">
 							</div>
 							<div class = "form-group">
 								<label for = "totalInterview">Total Interview Rounds</label>
-								<input name = "totalInterview" class = "form-control" v-model = "totalInterview" type = "number" maxlength=	"255">
+								<input name = "totalInterview" class = "form-control" type = "number" maxlength=	"255" v-model="interviewItem.totalInterview">
 							</div>
 							<div class = "form-group">
 								<label for = "currentInterview">Current Interview</label>
-								<input name = "currentInterview" class = "form-control" v-model = "currentInterview" type = "number" maxlength="255">							
+								<input name = "currentInterview" class = "form-control" type = "number" maxlength="255" v-model="interviewItem.currentInterview">							
 							</div>
 							<div class = "form-check">
-								<input name = "jobOffer" class = "form-check-input" v-model = "jobOffer" type = "checkbox" maxlength="255">
+								<input name = "jobOffer" class = "form-check-input" type = "checkbox" maxlength="255" v-model="interviewItem.jobOffer">
 								<label for = "jobOffer" class= "form-check-label">Job Offered?</label>
 							</div>
 								<button @click = 'addItem' class = "btn btn-raised btn-primary">Add</button>
@@ -32,9 +32,9 @@
 					<ul v-else class = "interviewList">
 						<li v-for = "item in interviewList" class= "interviewList-item">
 							<div class="progress">
-  								<div class="progress-bar" role="progressbar" :style="{width:item.progress}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{item.progress}}</div>
+  								<div class="progress-bar" role="progressbar" :style="{width:item.progress+'%'}"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{item.current_interview}}/{{item.total_interview}}</div>
 							</div>
-							<p>{{item.companyName}} {{item.position}}</p>
+							<p>{{item.company_name}} : {{item.position}}</p>
 						</li>
 					</ul>
 					<button @click = 'showInput' class = "btn btn-raised btn-primary showBtn">Show Form</button>
@@ -72,14 +72,15 @@
           dates: new Date()
         }
       ],
-				companyName: '',
-				position: '',
-				currentInterview: '',
-				totalInterview:'',
-				jobOffer: false,
 				showForm: false,
-				progress: 0,
-				interviewList: []
+				interviewList: [],
+				interviewItem : {
+					companyName : '',
+					position: '',
+					currentInterview: '',
+					totalInterview:'',
+					jobOffer: false,
+				}
 			}
 		},
 		created(){
@@ -87,30 +88,28 @@
 		},
 		methods: {
 			fetchItems(){
-				fetch('users/dashboard')
+				fetch('api/users/dashboard')
 				.then(res => res.json())
 				.then(res => {
+					this.interviewList = res;
 					console.log(res);
 				});
 
 			},
-
 			addItem(e) {
-				this.interviewList.push({					
-					companyName: this.companyName,
-					position:this.position,
-					totalInterview: this.totalInterview,
-					currentInterview: this.currentInterview,
-					jobOffer: this.jobOffer,
-					progress: String((this.currentInterview/this.totalInterview)*100)+'%'
-				});
+				console.log(this.interviewItem);
+				axios({
+        			method: "POST",
+        			url: "/api/users/dashboard",
+        			data: this.interviewItem
+      			})
+				.then(function(response) {
+          			console.log(response);
+              	})
+              	.catch(function (error){
+              		console.log(error);
+              	})
 				//resets the form and shows the list again
-				console.log(this.interviewList[0]);
-				this.companyName = '';
-				this.position = '';
-				this.currentInterview = '';
-				this.totalInterview = '';
-				this.showForm = false;
 				e.preventDefault();
 			},
 			deleteItem(e){

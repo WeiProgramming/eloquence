@@ -16,11 +16,11 @@ class CreateUserInterviewsTable extends Migration
         Schema::create('user_interviews', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('company_name');
-            $table->string('position');
-            $table->tinyInteger('current_interview');
-            $table->tinyInteger('total_interview');
-            $table->enum('job_offer',['true','false']);
+            $table->string('company_name')->nullable();
+            $table->string('position')->nullable();
+            $table->tinyInteger('current_interview')->nullable();
+            $table->tinyInteger('total_interview')->nullable();
+            $table->boolean('job_offer')->default(0);
             $table->timestamps();
         });
     }

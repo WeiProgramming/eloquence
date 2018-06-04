@@ -14075,6 +14075,11 @@ module.exports = __webpack_require__(56);
 __webpack_require__(15);
 
 window.Vue = __webpack_require__(38);
+window.axios = __webpack_require__(19);
+
+window.axios.defaults.headers.common = {
+  'X-Requested-With': 'XMLHttpRequest'
+};
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -47944,14 +47949,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				},
 				dates: new Date()
 			}],
-			companyName: '',
-			position: '',
-			currentInterview: '',
-			totalInterview: '',
-			jobOffer: false,
 			showForm: false,
-			progress: 0,
-			interviewList: []
+			interviewList: [],
+			interviewItem: {
+				companyName: '',
+				position: '',
+				currentInterview: '',
+				totalInterview: '',
+				jobOffer: false
+			}
 		};
 	},
 	created: function created() {
@@ -47960,28 +47966,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		fetchItems: function fetchItems() {
-			fetch('users/dashboard').then(function (res) {
+			var _this = this;
+
+			fetch('api/users/dashboard').then(function (res) {
 				return res.json();
 			}).then(function (res) {
+				_this.interviewList = res;
 				console.log(res);
 			});
 		},
 		addItem: function addItem(e) {
-			this.interviewList.push({
-				companyName: this.companyName,
-				position: this.position,
-				totalInterview: this.totalInterview,
-				currentInterview: this.currentInterview,
-				jobOffer: this.jobOffer,
-				progress: String(this.currentInterview / this.totalInterview * 100) + '%'
+			console.log(this.interviewItem);
+			axios({
+				method: "POST",
+				url: "/api/users/dashboard",
+				data: this.interviewItem
+			}).then(function (response) {
+				console.log(response);
+			}).catch(function (error) {
+				console.log(error);
 			});
 			//resets the form and shows the list again
-			console.log(this.interviewList[0]);
-			this.companyName = '';
-			this.position = '';
-			this.currentInterview = '';
-			this.totalInterview = '';
-			this.showForm = false;
 			e.preventDefault();
 		},
 		deleteItem: function deleteItem(e) {
@@ -48518,198 +48523,232 @@ var render = function() {
           _vm._v(" "),
           _vm.showForm
             ? _c("div", { staticClass: "container" }, [
-                _c("form", [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "companyName" } }, [
-                      _vm._v("Company")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.companyName,
-                          expression: "companyName"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        name: "companyName",
-                        type: "text",
-                        maxlength: "255"
-                      },
-                      domProps: { value: _vm.companyName },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.companyName = $event.target.value
-                        }
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addItem($event)
                       }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "position" } }, [
-                      _vm._v("Position")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.position,
-                          expression: "position"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        name: "position",
-                        type: "text",
-                        maxlength: "255"
-                      },
-                      domProps: { value: _vm.position },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "companyName" } }, [
+                        _vm._v("Company")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.interviewItem.companyName,
+                            expression: "interviewItem.companyName"
                           }
-                          _vm.position = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "totalInterview" } }, [
-                      _vm._v("Total Interview Rounds")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.totalInterview,
-                          expression: "totalInterview"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        name: "totalInterview",
-                        type: "number",
-                        maxlength: "255"
-                      },
-                      domProps: { value: _vm.totalInterview },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.totalInterview = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "currentInterview" } }, [
-                      _vm._v("Current Interview")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.currentInterview,
-                          expression: "currentInterview"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        name: "currentInterview",
-                        type: "number",
-                        maxlength: "255"
-                      },
-                      domProps: { value: _vm.currentInterview },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.currentInterview = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.jobOffer,
-                          expression: "jobOffer"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: {
-                        name: "jobOffer",
-                        type: "checkbox",
-                        maxlength: "255"
-                      },
-                      domProps: {
-                        checked: Array.isArray(_vm.jobOffer)
-                          ? _vm._i(_vm.jobOffer, null) > -1
-                          : _vm.jobOffer
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.jobOffer,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 && (_vm.jobOffer = $$a.concat([$$v]))
-                            } else {
-                              $$i > -1 &&
-                                (_vm.jobOffer = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "companyName",
+                          type: "text",
+                          maxlength: "255"
+                        },
+                        domProps: { value: _vm.interviewItem.companyName },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          } else {
-                            _vm.jobOffer = $$c
+                            _vm.$set(
+                              _vm.interviewItem,
+                              "companyName",
+                              $event.target.value
+                            )
                           }
                         }
-                      }
-                    }),
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "position" } }, [
+                        _vm._v("Position")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.interviewItem.position,
+                            expression: "interviewItem.position"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "position",
+                          type: "text",
+                          maxlength: "255"
+                        },
+                        domProps: { value: _vm.interviewItem.position },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.interviewItem,
+                              "position",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "totalInterview" } }, [
+                        _vm._v("Total Interview Rounds")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.interviewItem.totalInterview,
+                            expression: "interviewItem.totalInterview"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "totalInterview",
+                          type: "number",
+                          maxlength: "255"
+                        },
+                        domProps: { value: _vm.interviewItem.totalInterview },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.interviewItem,
+                              "totalInterview",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "currentInterview" } }, [
+                        _vm._v("Current Interview")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.interviewItem.currentInterview,
+                            expression: "interviewItem.currentInterview"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "currentInterview",
+                          type: "number",
+                          maxlength: "255"
+                        },
+                        domProps: { value: _vm.interviewItem.currentInterview },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.interviewItem,
+                              "currentInterview",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.interviewItem.jobOffer,
+                            expression: "interviewItem.jobOffer"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          name: "jobOffer",
+                          type: "checkbox",
+                          maxlength: "255"
+                        },
+                        domProps: {
+                          checked: Array.isArray(_vm.interviewItem.jobOffer)
+                            ? _vm._i(_vm.interviewItem.jobOffer, null) > -1
+                            : _vm.interviewItem.jobOffer
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.interviewItem.jobOffer,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.interviewItem,
+                                    "jobOffer",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.interviewItem,
+                                    "jobOffer",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.interviewItem, "jobOffer", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          attrs: { for: "jobOffer" }
+                        },
+                        [_vm._v("Job Offered?")]
+                      )
+                    ]),
                     _vm._v(" "),
                     _c(
-                      "label",
+                      "button",
                       {
-                        staticClass: "form-check-label",
-                        attrs: { for: "jobOffer" }
+                        staticClass: "btn btn-raised btn-primary",
+                        on: { click: _vm.addItem }
                       },
-                      [_vm._v("Job Offered?")]
+                      [_vm._v("Add")]
                     )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-raised btn-primary",
-                      on: { click: _vm.addItem }
-                    },
-                    [_vm._v("Add")]
-                  )
-                ])
+                  ]
+                )
               ])
             : _c(
                 "ul",
@@ -48721,7 +48760,7 @@ var render = function() {
                         "div",
                         {
                           staticClass: "progress-bar",
-                          style: { width: item.progress },
+                          style: { width: item.progress + "%" },
                           attrs: {
                             role: "progressbar",
                             "aria-valuenow": "25",
@@ -48729,13 +48768,21 @@ var render = function() {
                             "aria-valuemax": "100"
                           }
                         },
-                        [_vm._v(_vm._s(item.progress))]
+                        [
+                          _vm._v(
+                            _vm._s(item.current_interview) +
+                              "/" +
+                              _vm._s(item.total_interview)
+                          )
+                        ]
                       )
                     ]),
                     _vm._v(" "),
                     _c("p", [
                       _vm._v(
-                        _vm._s(item.companyName) + " " + _vm._s(item.position)
+                        _vm._s(item.company_name) +
+                          " : " +
+                          _vm._s(item.position)
                       )
                     ])
                   ])

@@ -17,6 +17,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('users/dashboard','InterviewListController');
-
 Route::get('/home', 'HomeController@index')->name('home');

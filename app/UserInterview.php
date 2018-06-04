@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserInterview extends Model
 {
-    protected $fillable = ['company_name','position','current_interview','total_interviews','job_offer'];
+    protected $fillable = ['user_id','company_name','position','current_interview','total_interview','job_offer', 'progress'];
 
 
     public function user(){
