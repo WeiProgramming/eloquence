@@ -18,37 +18,51 @@ class InterviewListController extends Controller
      */
     public function index()
     {
+        dd(Auth::user());
         $user = UserInterview::all();
         return $user;
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store or edit a resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        UserInterview::create(array(
-            'user_id' => 1,
-            'company_name' => $request->companyName,
-            'position' => $request->position,
-            'total_interview' => $request->totalInterview,
-            'current_interview' => $request->currentInterview,
-            'job_offer' => $request->jobOffer,
-            'progress' => $this->calculateProgress($request->totalInterview,$request->currentInterview)
-        ));
+        if($request->interview_id == 0){
+            if($request->totalInterview == 0){
+                $progress = 0;
+            }
+            else {
+                $progress = $this->calculateProgress($request->totalInterview,$request->currentInterview);
+            }
+            UserInterview::create(array(
+                'user_id' => $request->user_id,
+                'company_name' => $request->companyName,
+                'position' => $request->position,
+                'total_interview' => $request->totalInterview,
+                'current_interview' => $request->currentInterview,
+                'job_offer' => $request->jobOffer,
+                'progress' => $progress
+            ));
+        }
+        else {
+            //vue passes in a null for some reason
+            if($request->jobOffer == NULL){
+                $request->jobOffer = false;
+            }
+            $userInterview = UserInterview::findOrFail($request->interview_id);
+            $userInterview->company_name = $request->companyName;
+            $userInterview->position = $request->position;
+            $userInterview->current_interview = $request->currentInterview;
+            $userInterview->total_interview = $request->totalInterview;
+            $userInterview->job_offer = $request->jobOffer;
+            $userInterview->progress = $this->calculateProgress($request->totalInterview,$request->currentInterview);
 
-        // $userInterview = new UserInterview;
-        // $userInterview->user_id = 1;
-        // $userInterview->company_name = $request->companyName;
-        // $userInterview->position = $request->position;
-        // $userInterview->total_interview = $request->totalInterview;
-        // $userInterview->current_interview = $request->currentInterview;
-        // $userInterview->job_offer = $request->jobOffer;
-        // $userInterview->progress = 60;
-        // $userInterview->save();
+            $userInterview->save();
+        }
         return "success";
     }
 
@@ -72,7 +86,7 @@ class InterviewListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -82,11 +96,13 @@ class InterviewListController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        $item = UserInterview::destroy($id);
+        return "success";
     }
 
     public function calculateProgress($total,$current){
+        //heck against dividing by 0
         return floor(($current/$total)*100);
     }
 }
