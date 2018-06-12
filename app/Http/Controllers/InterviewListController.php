@@ -16,11 +16,9 @@ class InterviewListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        dd(Auth::user());
-        $user = UserInterview::all();
-        return $user;
+        return $request->user()->userInterview;
     }
 
     /**
@@ -39,7 +37,7 @@ class InterviewListController extends Controller
                 $progress = $this->calculateProgress($request->totalInterview,$request->currentInterview);
             }
             UserInterview::create(array(
-                'user_id' => $request->user_id,
+                'user_id' => $request->user()->id,
                 'company_name' => $request->companyName,
                 'position' => $request->position,
                 'total_interview' => $request->totalInterview,

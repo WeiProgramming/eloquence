@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <dashboard-container user="{{Auth::user()->id}}" ></dashboard-container>
+    <dashboard-container token="{{Auth::user()->api_token}}" ></dashboard-container>
 </div>
 
 @endsection

@@ -70,7 +70,7 @@
 
 	export default {
 		props: {
-			user: {
+			token: {
 				type:String,
 				required:true
 			}
@@ -109,11 +109,18 @@
 		},
 		methods: {
 			fetchItems(){
-				fetch('api/users/dashboard')
-				.then(res => res.json())
+				axios({
+					method: 'GET',
+					url: 'api/users/dashboard',
+					params: {
+						api_token : this.token
+					}
+				})
 				.then(res => {
-					this.interviewList = res;
-					console.log(res);
+					this.interviewList = res.data;
+				})
+				.catch(error => {
+					console.log(error)
 				});
 
 			},
@@ -123,7 +130,7 @@
 					console.log("runnin post");
 					axios({
         				method: "POST",
-        				url: "/api/users/dashboard",
+        				url: "/api/users/dashboard?api_token="+this.token,
         				data: this.interviewItem
       				})
 					.then(response => {
@@ -143,7 +150,7 @@
               		console.log("updating " + this.interviewItemId + this.interviewItem.jobOffer);
 					axios({
 						method:"POST",
-						url:"api/users/dashboard/",
+						url:"api/users/dashboard?api_token="+this.token,
 						data: this.interviewItem
 					}).
 					then(response => {
@@ -164,7 +171,7 @@
 			deleteItem(id){
 				axios({
 					method:"DELETE",
-					url:"api/users/dashboard/" + id
+					url:"api/users/dashboard/" + id + "?api_token=" + this.token
 				}).
 				then(response => {
 					this.fetchItems();
