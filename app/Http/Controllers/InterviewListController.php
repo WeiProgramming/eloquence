@@ -18,7 +18,7 @@ class InterviewListController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->userInterview;
+        return $request->user()->userInterview->toArray(); //to array to make it a basic json api 
     }
 
     /**

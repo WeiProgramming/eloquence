@@ -48034,6 +48034,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					_this2.interviewItem.currentInterview = '';
 					_this2.interviewItem.totalInterview = '';
 					_this2.interviewItem.jobOffer = false;
+					_this2.interviewItem.interview_id = 0;
+					_this2.showForm = !_this2.showForm;
 				}).catch(function (error) {
 					console.log(error);
 				});
@@ -48054,6 +48056,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		showInput: function showInput() {
+			this.edit = false;
 			this.showForm = !this.showForm;
 		},
 		editInput: function editInput(interviewItem) {

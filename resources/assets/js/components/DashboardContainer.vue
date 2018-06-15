@@ -160,6 +160,8 @@
           				this.interviewItem.currentInterview = '';
           				this.interviewItem.totalInterview = '';
           				this.interviewItem.jobOffer = false;
+          				this.interviewItem.interview_id = 0;
+          				this.showForm = !(this.showForm);
 					}).
 					catch(error =>{
 						console.log(error);
@@ -181,6 +183,7 @@
 				});
 			},
 			showInput() {
+				this.edit = false;
 				this.showForm = !(this.showForm);
 			},
 			editInput(interviewItem) {
